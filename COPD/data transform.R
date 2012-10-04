@@ -34,5 +34,3 @@ unlist(lapply(data, function(x) x$usubjid[1]))
 lapply(data, dim)
 
 
-data$visit = rep(c(rep(1,4), rep(3, 4)), 46)
-data$exercise = rep(c(1:4), 46*2)
