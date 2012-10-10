@@ -35,3 +35,5 @@ tmp = apply(tmp, 2, function(x) {
 )
 tmp = log(tmp)
 data.normalized = tmp
+
+#data.normalized = data.frame(data.normalized, COPD.data[, index])
