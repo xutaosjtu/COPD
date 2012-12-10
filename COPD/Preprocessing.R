@@ -27,7 +27,7 @@ index = which(colnames(COPD.data) %in% c("id",mode1))
 tmp = COPD.data[,-index]
 tmp = as.matrix(tmp)
 tmp.na = apply(tmp, 2, function(x) length(which(is.na(x))))
-tmp = tmp[, which(tmp.na<100)]
+#tmp = tmp[, which(tmp.na<100)]
 tmp = apply(tmp, 2, function(x) {
 			x[which(is.na(x))] <- min(x, na.rm = T)
 			return(x)

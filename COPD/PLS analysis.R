@@ -15,17 +15,19 @@ require(gplots)
 #tmp = na.omit(tmp)
 #tmppls = plsda(as.matrix(tmp), as.factor(data$COPD), ncomp = 3)
 #PLS of COPD
-data = data.frame(data.normalized, COPD = as.numeric(COPD.data$COPD))
+data = data.frame(data.normalized, COPD = as.numeric(COPD.data$COPD), exercise = as.numeric(COPD.data$exercise))
 
-S4pls<-plsr(COPD ~ . , data=data, subset = which(COPD.data$exercise == 3))
-#S4pls<-plsda(x=data.normalized, COPD.data$COPD, ncomp = 10)
+subset= which(COPD.data$COPD == "C=N")
+S4pls<-plsr(exercise ~ . , data=data, subset = subset)#, subset = which(COPD.data$exercise == 3)
+S4pls<-plsda(x=data.normalized, COPD.data$exercise, ncomp = 10)
 
 
 #color = rep(0, dim(data)[1])
 color = greenred(24)[c(c(4:1)*2,c(18,20, 22, 24)) ]
 #plot(S4pls$scores[,1:2],col=color[c(4,8)][interaction(COPD.data$exercise[which(COPD.data$exercise == 1)],COPD.data$COPD[which(COPD.data$exercise == 1)])], pch=c(17, 19)[COPD.data$SEX[which(COPD.data$exercise == 1)]], main = "PLS plot of COPD vs non COPD")
-plot(S4pls$scores[,c(1,2)],col = color[interaction(COPD.data$exercise,COPD.data$COPD)], pch=c(17, 19)[COPD.data$SEX[which(COPD.data$exercise == 1)]])
-
+pdf("Exercise non-COPD.pdf", height = 5, width = 10)
+plot(S4pls$scores[,c(1,2)],col = color[interaction(COPD.data$exercise[subset],COPD.data$COPD[subset])], pch=c(17, 19)[COPD.data$SEX[which(COPD.data$exercise == 1)]], main = "Exercise: NonCOPD", xlim = c(-6, 4))
+dev.off()
 
 #PLS of exercises
 data = data.frame(data.normalized, exercise = COPD.data$exercise)
